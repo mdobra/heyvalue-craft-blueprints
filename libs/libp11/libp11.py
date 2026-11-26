@@ -41,7 +41,7 @@ class PackageMake(MakeFilePackageBase):
         self.subinfo.options.make.supportsMultijob = False
         self.subinfo.options.make.makeProgram = f"nmake.exe"
         self.subinfo.options.make.args += f"/f Makefile.mak OPENSSL_DIR=" + str(CraftCore.standardDirs.craftRoot())
-        if CraftCore.compiler.architecture == CraftCompiler.Architecture.x86_64:
+        if "x86_64" in str(CraftCore.compiler.architecture).lower() or "x86_64" in str(CraftCore.compiler).lower():
              self.subinfo.options.make.args += f" BUILD_FOR=WIN64"
 
     def install(self):
@@ -82,7 +82,7 @@ class PackageAutotools(AutoToolsPackageBase):
         super().__init__(**kwargs)
         self.subinfo.options.configure.autoreconf = False
 
-if CraftCore.compiler.platform.isMSVC():
+if CraftCore.compiler.compiler.isMSVC:
 
     class Package(PackageMake):
         pass
